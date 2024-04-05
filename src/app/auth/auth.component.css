@@ -1,0 +1,82 @@
+.container{
+    display: flex;
+    height: 100vh;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: white;
+    padding: 20px;
+}
+
+.left {
+    background-color: #251605;
+}
+
+@media (max-width: 800px) {
+    .container {
+        flex-direction: column;
+    }
+}
+
+.left h2 {
+    font-size: 1.5em;
+}
+
+.left div {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.left div img {
+    width: 25em;
+    height: 20em;
+    margin-top: 15%;
+}
+
+.left div h3 {
+    font-size: 2.5em;
+    text-align: center;
+    margin-top: 2em;
+}
+
+.right{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.right h1{
+    color: #251605;
+    margin-top: 15%;
+}
+
+
+.right form span{
+    margin-top: 45px;
+}
+
+.right form span input {
+    width: 17em;
+}
+
+:host ::ng-deep .p-button{
+    width: 17em;
+    background-color: #251605;
+    margin: 50px auto;
+    display: block;
+}
+
+.help-message {
+    color: #d90429;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid #d90429;
+}
+
+p-password.ng-invalid.ng-touched {
+    border: 1px solid #d90429;
+}

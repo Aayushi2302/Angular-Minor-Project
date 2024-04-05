@@ -1,0 +1,40 @@
+<div class="container">
+    <h1>Customers</h1>
+    <div class="table-bg">
+        <p-table 
+            [value]="customers" 
+            [paginator]="true"
+            [rows]="3"
+            [showCurrentPageReport]="true"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [rowsPerPageOptions]="[5, 10, 20]"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name" style="width:20%">Name<p-sortIcon field="name"></p-sortIcon></th>
+                    <th pSortableColumn="vehicle_no" style="width:20%">Vehicle Number<p-sortIcon field="vehicle_no"></p-sortIcon></th>
+                    <th pSortableColumn="vehicle_type_name" style="width:20%">Vehicle Type<p-sortIcon field="vehicle_type_name"></p-sortIcon></th>
+                    <th pSortableColumn="status" style="width:20%">Status<p-sortIcon field="status"></p-sortIcon></th>
+                    <th style="width:20%"><p-button type="button" (click)="addCustomer()">+ Add Customer</p-button></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-customer let-rowIndex="rowIndex">
+                <tr>
+                    <td>{{customer.name}}</td>
+                    <td>{{customer.vehicle_no}}</td>
+                    <td>{{customer.vehicle_type_name}}</td>
+                    <td class="cust-status"><p-tag [ngStyle]="{'background-color':customer.status === 'active' ? 'green' : 'red' }">{{ customer.status }}</p-tag></td>
+                    <td>
+                        <div class="operations">
+                            <img src="../../assets/info-btn.png" alt="info-btn" (click)="viewCustomer(rowIndex)">
+                            <img src="../../assets/edit.png" alt="edit-btn" (click)="updateCustomer(rowIndex)">
+                            <img src="../../assets/delete.png" alt="delete-btn" (click)="deleteCustomer(rowIndex)">
+                        </div>
+                    </td>   
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+<router-outlet></router-outlet>

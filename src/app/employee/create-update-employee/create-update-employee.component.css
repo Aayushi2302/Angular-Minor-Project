@@ -1,0 +1,51 @@
+:host ::ng-deep .p-dialog-title {
+    color: #251605;
+    font-size: 1.5em;
+}
+
+:host ::ng-deep .p-button{
+   width: 30px;
+   height: 30px;
+   color: white
+}
+
+form{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 20px;
+}
+form div{
+    margin: 13px;
+}
+
+form div input {
+    width: 17em
+}
+
+.radio-button {
+    margin: 10px;
+}
+
+.dropdown {
+    text-transform: capitalize;
+}
+
+:host ::ng-deep .p-dropdown {
+    width: 17em;
+    margin-bottom: 20px;
+}
+
+.help-message {
+    color: #d90429;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid #d90429;
+}
+
+.submit-btn{
+    width: 17em;
+    height: 3em;
+    border-radius: 8px;
+}

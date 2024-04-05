@@ -1,0 +1,26 @@
+:host ::ng-deep .p-dialog-title {
+    color: #251605;
+    font-size: 1.5em;
+}
+
+:host ::ng-deep .p-button{
+   width: 30px;
+   height: 30px;
+   color: white
+}
+
+.row {
+    display: flex;
+    border: 2px solid #251605;
+    margin: 5px;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.row p {
+    margin: 5px;
+    padding: 10px;
+}

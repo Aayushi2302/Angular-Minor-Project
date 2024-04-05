@@ -1,0 +1,96 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2em;
+}
+
+.slots-bg{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 90%;
+    background-color: white
+}
+
+.info-bar{
+    display: flex;
+}
+
+.parking-slot {
+    width: 12em;
+    height: 12em;
+    margin: 2em;
+    text-align: center;
+    color: white;
+}
+
+.parking-slot-vacant {
+    background-color: #698F3F;
+}
+
+.parking-slot-booked {
+    background-color: #457B9D;
+}
+
+.parking-slot-inactive {
+    background-color: #E63946;
+}
+
+.parking-slot p {
+    font-size: 1.5em;
+    margin: 0;
+    color: #251605;
+    background-color: #E7DECD;
+    padding: 2px;
+
+}
+
+.operations {
+    display: flex;
+}
+
+.operations button {
+    background-color: #251605;
+    margin-top: 30px;
+    border-radius: 0;
+}
+
+.info-bar{
+    display: flex;
+    justify-content: center;
+}
+
+.info-bar-box{
+    display: flex;
+    margin-right: 30px;
+    justify-content: center;
+    align-items: center;
+}
+
+#vacant div{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    background-color: #698F3F;
+}
+
+#booked div{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    background-color: #457B9D;
+}
+
+#inactive div{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    background-color: #E63946;
+}
+
+.feature-btn button{
+    margin: 3em;
+    background-color: #251605;
+    padding: 15px;
+}

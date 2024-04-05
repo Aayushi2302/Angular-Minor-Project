@@ -1,0 +1,64 @@
+<div class="container">
+    <div class="column left">
+        <h2>ParkSafe</h2>
+        <div>
+            <h3>WELCOME BACK</h3>
+            <img src="../../assets/login.png" alt="login-image">
+        </div>
+    </div>
+    <div class="column right">
+        <h1>Login Account</h1>
+        <form (ngSubmit)="onLogin()" #form="ngForm">  
+            <span class="p-float-label">
+                <input pInputText id="username" 
+                    ngModel name="username" 
+                    required 
+                    pattern="(^user@)([a-z]{5,})$"
+                    #username="ngModel"
+                />
+                <label for="username">Username</label> 
+            </span>
+            <div *ngIf="!username.valid && username.dirty" class="help-message">
+                <small *ngIf="username.control.errors?.required; else invalidUsername">
+                    *Username is required.
+                </small>
+                <ng-template #invalidUsername>
+                    <small>
+                        *Username is invalid.
+                    </small>
+                </ng-template>
+            </div>
+            <span class="p-float-label">
+                <p-password id="password" 
+                    [toggleMask]="true" 
+                    ngModel name="password" 
+                    required
+                    #password="ngModel"
+                >
+                    <!-- <ng-template pTemplate="footer">
+                        <p-divider></p-divider>
+                        <p class="mt-2">Suggestions</p>
+                        <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                            <li>At least one lowercase</li>
+                            <li>At least one uppercase</li>
+                            <li>At least one numeric</li>
+                            <li>Minimum 8 characters</li>
+                        </ul>
+                    </ng-template> -->
+                </p-password>
+                <label for="password">Password</label>
+            </span>
+            <div *ngIf="!password.valid && password.dirty" class="help-message">
+                <small *ngIf="password.control.errors?.required; else invalidPassword">
+                    *Password is required.
+                </small>
+                <ng-template #invalidPassword>
+                    <small>
+                        *Password is invalid.
+                    </small>
+                </ng-template>
+            </div>
+            <p-button [disabled]="!form.valid" type="submit" label="Submit"></p-button>
+        </form>
+    </div>
+</div>

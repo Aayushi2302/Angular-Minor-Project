@@ -1,0 +1,55 @@
+:host ::ng-deep .p-menubar {
+    background-color: #251605;
+    border-radius: 0px;
+    padding: 0px 20px;
+    font-family: "Inter", sans-serif;
+}
+
+:host ::ng-deep p-menubarsub{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+:host ::ng-deep .p-menuitem-text {
+    color: #FFFFFF;
+}
+
+:host ::ng-deep a.p-menubar-button{
+    order: 3;
+}
+
+.logo {
+    color: #FFFFFF;
+}
+
+.profile-text {
+    display: flex;
+    flex-direction: column;
+    color: #FFFFFF;
+}
+
+.profile-text h4{
+    white-space: nowrap;
+    margin: 0px;
+    margin-left: 10px;
+}
+
+.profile-text p {
+    margin: 0px;
+    margin-left: 10px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-profile img {
+    width: 3em;
+    height: 3em;
+}
+
+:host ::ng-deep .p-menuitem-link :hover {
+    color: #251605;
+}
