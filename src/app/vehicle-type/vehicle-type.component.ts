@@ -19,12 +19,12 @@ export class VehicleTypeComponent implements OnInit, OnDestroy{
     router = inject(Router);
     activeRoute = inject(ActivatedRoute);
     vehicleTypes: VehicleTypeInterface[];
-    vehicleTypeGetSubscription: Subscription;
+    vehicleTypeSubscription: Subscription;
     role: string;
     
     ngOnInit() {
         this.role = this.userService.getRole();
-        this.vehicleTypeGetSubscription = 
+        this.vehicleTypeSubscription = 
         this.vehicleTypeService.getAllVehicleTypes()
         .subscribe({
             next: (resData: SuccessResponseInterface<VehicleTypeInterface>) => {
@@ -42,13 +42,12 @@ export class VehicleTypeComponent implements OnInit, OnDestroy{
     }
 
     updateVehicleType(index: number) {
-        this.vehicleTypeService.vehicleType.next(this.vehicleTypes[index]);
+        this.vehicleTypeService.selectedVehicleType.next(this.vehicleTypes[index]);
         this.vehicleTypeService.editMode.next(true);
-        index++;
-        this.router.navigate([index, "update"], {relativeTo: this.activeRoute});
+        this.router.navigate([index+1, "update"], {relativeTo: this.activeRoute});
     }
 
     ngOnDestroy() {
-        this.vehicleTypeGetSubscription.unsubscribe();
+        this.vehicleTypeSubscription.unsubscribe();
     }
 }

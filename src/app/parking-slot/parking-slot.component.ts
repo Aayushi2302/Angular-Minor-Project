@@ -19,11 +19,13 @@ export class ParkingSlotComponent implements OnInit, OnDestroy{
   userService = inject(UserService);
   router = inject(Router);
   activeRoute = inject(ActivatedRoute);
-  parkingSlots: ParkingSlotInterface[];
-  parkingSlotGetSubscription: Subscription;
-  parkingSlotDeleteSubscription: Subscription;
   customMessageService = inject(CustomMessageService);
+
+  parkingSlotSubscription: Subscription;
+
   role: string;
+  parkingSlots: ParkingSlotInterface[];
+
 
   ngOnInit() {
     this.getAllParkingSlots();
@@ -31,7 +33,7 @@ export class ParkingSlotComponent implements OnInit, OnDestroy{
   }
 
   getAllParkingSlots() {
-    this.parkingSlotGetSubscription = 
+    this.parkingSlotSubscription = 
       this.parkingSlotService.getAllParkingSlots()
       .subscribe({
         next: (resData: SuccessResponseInterface<ParkingSlotInterface>) => {
@@ -64,16 +66,17 @@ export class ParkingSlotComponent implements OnInit, OnDestroy{
   }
 
   updateParkingSlot(index: number) {
+    this.parkingSlotService.selectedParkingSlot.next(this.parkingSlots[index]);
     this.router.navigate([index+1, "update"], {relativeTo: this.activeRoute});
     this.parkingSlotService.editMode.next(true);
   }
 
   deleteParkingSlot(index: number) {
     let psn = this.parkingSlots[index].parking_slot_no;
-    this.parkingSlotDeleteSubscription=
+    this.parkingSlotSubscription=
       this.parkingSlotService.deleteParkingSlot(psn)
       .subscribe({
-        next: (resData: SuccessResponseInterface<[]>) => {
+        next: (resData: SuccessResponseInterface<any>) => {
           this.customMessageService.displayToast(
             "success",
             "Success",
@@ -91,7 +94,17 @@ export class ParkingSlotComponent implements OnInit, OnDestroy{
       })
   }
 
+  reserveParkingSlot() {
+    this.router.navigate(["reserve"], {relativeTo: this.activeRoute});
+    this.parkingSlotService.vacate.next(false);
+  }
+
+  vacateParkingSlot() {
+    this.router.navigate(["vacate"], {relativeTo: this.activeRoute});
+    this.parkingSlotService.vacate.next(true);
+  }
+
   ngOnDestroy() {
-    this.parkingSlotGetSubscription.unsubscribe();
+    this.parkingSlotSubscription.unsubscribe();
   }
 }

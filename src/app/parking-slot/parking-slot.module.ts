@@ -11,6 +11,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from "primeng/inputtext";
 import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { DropdownModule } from 'primeng/dropdown';
         ButtonModule,
         DialogModule,
         InputTextModule,
-        DropdownModule
+        DropdownModule,
+        CalendarModule
     ]
 })
 export class ParkingSlotModule {

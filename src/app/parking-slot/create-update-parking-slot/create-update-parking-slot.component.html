@@ -1,60 +1,62 @@
 <p-dialog header="Parking Slot Form" (onHide)="onClose()" [modal]="true" [(visible)]="visible" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
-    <form (ngSubmit)="addParkingSlot()" #form="ngForm">
-        <div>
-            <span class="p-float-label">
-                <input pInputText id="parking_slot_no"
-                    ngModel name="parking_slot_no" 
-                    required 
-                    pattern="^PSN[0-9]+$"
-                    #parkingSlotNo="ngModel"
-                    [disabled]="editMode"
-                />
-                <label for="parking-slot_no">Parking Slot Number</label> 
-            </span>
-            <div *ngIf="!parkingSlotNo.valid && (parkingSlotNo.dirty || parkingSlotNo.touched)" class="help-message">
-                <small *ngIf="parkingSlotNo.control.errors?.required; else invalidParkingSlotNo">
-                    *Parking Slot No is required.
-                </small>
-                <ng-template #invalidParkingSlotNo>
-                    <small>
-                        *Parking Slot No is invalid.
+    <form (ngSubmit)="onSubmit()" #form="ngForm">
+        <ng-container ngModelGroup="parking-slot-data">
+            <div>
+                <span class="p-float-label">
+                    <input pInputText id="parking_slot_no"
+                        ngModel name="parking_slot_no" 
+                        required 
+                        pattern="^PSN[0-9]+$"
+                        #parkingSlotNo="ngModel"
+                        [disabled]="editMode"
+                    />
+                    <label for="parking-slot_no">Parking Slot Number</label> 
+                </span>
+                <div *ngIf="!parkingSlotNo.valid && (parkingSlotNo.dirty || parkingSlotNo.touched)" class="help-message">
+                    <small *ngIf="parkingSlotNo.control.errors?.required; else invalidParkingSlotNo">
+                        *Parking Slot No is required.
                     </small>
-                </ng-template>
+                    <ng-template #invalidParkingSlotNo>
+                        <small>
+                            *Parking Slot No is invalid.
+                        </small>
+                    </ng-template>
+                </div>
             </div>
-        </div>
-        <div class="card flex justify-content-center">
-            <p-dropdown
-                    ngModel name="vehicle_type_name"
-                    [options]="vehicleTypes" 
-                    [showClear]="true" 
-                    placeholder="Vehicle Type"
-                    class="dropdown"
-                    required
-                    #vehicleTypeName="ngModel"
-                    [disabled]="editMode"
-            ></p-dropdown>
-            <div *ngIf="!vehicleTypeName.valid && (vehicleTypeName.dirty || vehicleTypeName.touched)" class="help-message">
-                <small *ngIf="vehicleTypeName.control.errors?.required">
-                    *Vehicle Type Name is required.
-                </small>
+            <div class="card flex justify-content-center">
+                <p-dropdown
+                        ngModel name="vehicle_type_name"
+                        [options]="vehicleTypes" 
+                        [showClear]="true" 
+                        placeholder="Vehicle Type"
+                        class="dropdown"
+                        required
+                        #vehicleTypeName="ngModel"
+                        [disabled]="editMode"
+                ></p-dropdown>
+                <div *ngIf="!vehicleTypeName.valid && (vehicleTypeName.dirty || vehicleTypeName.touched)" class="help-message">
+                    <small *ngIf="vehicleTypeName.control.errors?.required">
+                        *Vehicle Type Name is required.
+                    </small>
+                </div>
             </div>
-        </div>
-        <div class="card flex justify-content-center" *ngIf="editMode">
-            <p-dropdown
-                    ngModel name="status"
-                    [options]="possibleStatus" 
-                    [showClear]="true" 
-                    placeholder="Parking Slot Status"
-                    class="dropdown"
-                    required
-                    #status="ngModel"
-            ></p-dropdown>
-            <div *ngIf="!status.valid && (status.dirty || status.touched)" class="help-message">
-                <small *ngIf="status.control.errors?.required">
-                    *Parking Slot status is required.
-                </small>
+            <div class="card flex justify-content-center" *ngIf="editMode">
+                <p-dropdown
+                        ngModel name="status"
+                        [options]="possibleStatus" 
+                        [showClear]="true" 
+                        placeholder="Parking Slot Status"
+                        class="dropdown"
+                        required
+                        #status="ngModel"
+                ></p-dropdown>
+                <div *ngIf="!status.valid && (status.dirty || status.touched)" class="help-message">
+                    <small *ngIf="status.control.errors?.required">
+                        *Parking Slot status is required.
+                    </small>
+                </div>
             </div>
-        </div>
+        </ng-container>
         <button type="submit" pButton label="Submit" class="submit-btn" [disabled]="!form.valid"></button>
     </form>
 </p-dialog>

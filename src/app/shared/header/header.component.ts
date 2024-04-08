@@ -27,7 +27,10 @@ export class HeaderComponent implements OnInit {
         label: "Parking Slots",
         routerLink: "parking-slots",
       },
-      {label: "Reservations"} 
+      {
+        label: "Reservations",
+        routerLink: "reservations"
+      } 
     ]; 
   }
 }

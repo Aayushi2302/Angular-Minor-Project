@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject, AfterViewInit } from '@angular/core';
 import { ParkingSlotService } from '../parking-slot.service';
 import { VehicleTypeService } from '../../vehicle-type/vehicle-type.service';
 import { VehicleTypeInterface } from '../../vehicle-type/vehicle-type.interface';
@@ -9,27 +9,30 @@ import { CustomMessageService } from '../../shared/custom-message.service';
 import { Subscription } from 'rxjs';
 import { SuccessResponseInterface } from '../../shared/success-response.interface';
 import { NgForm } from '@angular/forms';
+import { ParkingSlotInterface } from '../parking-slot-interface';
 
 @Component({
   selector: 'app-create-update-parking-slot',
   templateUrl: './create-update-parking-slot.component.html',
   styleUrl: './create-update-parking-slot.component.css'
 })
-export class CreateUpdateParkingSlotComponent implements OnInit, OnDestroy{
+export class CreateUpdateParkingSlotComponent implements OnInit, AfterViewInit, OnDestroy{
 
   parkingSlotService = inject(ParkingSlotService);
   vehicleTypeService = inject(VehicleTypeService);
   router = inject(Router);
   customMessageService = inject(CustomMessageService);
   activeRoute = inject(ActivatedRoute);
-  vehicleTypes: VehicleTypeInterface[];
-  visible = true;
+  
   vehicleTypeSubscription: Subscription;
   parkingSlotSubscription: Subscription;
-  parkingSlot: any = {};
-
-  possibleStatus = ["vacant", "active", "booked"];
+  
+  possibleStatus = ["vacant", "inactive"];
   editMode: boolean;
+  parkingSlot: any = {};
+  selectedParkingSlotNo: string;
+  vehicleTypes: VehicleTypeInterface[];
+  visible = true;
   
   @ViewChild('form') formElement: NgForm;
 
@@ -64,30 +67,81 @@ export class CreateUpdateParkingSlotComponent implements OnInit, OnDestroy{
           }
       })
 
-    this.parkingSlotService.editMode.subscribe((editCheck)=> this.editMode = editCheck);
+    this.parkingSlotService.selectedParkingSlot.subscribe((emittedData: ParkingSlotInterface) =>{
+      this.parkingSlot = emittedData
+    });
+    this.parkingSlotService.editMode.subscribe((emittedData: boolean) => this.editMode = emittedData);
+  }
+
+  ngAfterViewInit() {
+    if (this.editMode) {
+      setTimeout(()=>{
+        this.formElement.form.setValue({
+          "parking-slot-data": {
+            "parking_slot_no": this.parkingSlot.parking_slot_no,
+            "vehicle_type_name": this.parkingSlot.vehicle_type_name,
+            "status": this.parkingSlot.status
+          }
+        });
+        this.selectedParkingSlotNo = this.parkingSlot.parking_slot_no;
+      }, 0)
+    }
+  }
+
+  onSubmit() {
+    if (!this.editMode)   this.addParkingSlot();
+    else this.updateParkingSlotStatus();
+    this.onClose();
   }
 
   addParkingSlot() {
-    this.parkingSlot.parking_slot_no = this.formElement.value.parking_slot_no;
-    this.parkingSlot.vehicle_type_name = this.formElement.value.vehicle_type_name;
+    this.parkingSlot = {};
+    this.parkingSlot.parking_slot_no = this.formElement.value["parking-slot-data"].parking_slot_no;
+    this.parkingSlot.vehicle_type_name = this.formElement.value["parking-slot-data"].vehicle_type_name;
     this.parkingSlotSubscription=
-    this.parkingSlotService.createNewParkingSlot(this.parkingSlot)
-    .subscribe({
-      next: (resData: SuccessResponseInterface<[]>) => {
-        this.customMessageService.displayToast(
-          "success",
-          "Success",
-          resData.message
-        )
-      },
-      error: (errRes: HttpErrorResponse) => {
-        this.customMessageService.displayToast(
-          "error",
-          "Error",
-          errRes.error.message
-        )
-      }
-    })
+      this.parkingSlotService.createNewParkingSlot(this.parkingSlot)
+      .subscribe({
+        next: (resData: SuccessResponseInterface<any>) => {
+          this.customMessageService.displayToast(
+            "success",
+            "Success",
+            resData.message
+          )
+        },
+        error: (errRes: HttpErrorResponse) => {
+          this.customMessageService.displayToast(
+            "error",
+            "Error",
+            errRes.error.message
+          )
+        }
+      });
+  }
+
+  updateParkingSlotStatus() {
+    let type_name = this.parkingSlot.vehicle_type_name;
+    this.parkingSlot = {};
+    this.parkingSlot.vehicle_type_name = type_name;
+    this.parkingSlot.new_status = this.formElement.value["parking-slot-data"].status;
+    console.log(this.parkingSlot);
+    this.parkingSlotSubscription=
+      this.parkingSlotService.updateParkingSlot(this.selectedParkingSlotNo, this.parkingSlot)
+      .subscribe({
+        next: (resData: SuccessResponseInterface<any>) => {
+          this.customMessageService.displayToast(
+            "success",
+            "Success",
+            resData.message
+          )
+        },
+        error: (errRes: HttpErrorResponse) => {
+          this.customMessageService.displayToast(
+            "error",
+            "Error",
+            errRes.error.message
+          )
+        }
+      });
   }
 
   onClose() {
@@ -96,7 +150,7 @@ export class CreateUpdateParkingSlotComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy() {
-    // this.vehicleTypeSubscription.unsubscribe();
-    // this.parkingSlotSubscription.unsubscribe();
+    this.vehicleTypeSubscription.unsubscribe();
+    if(this.parkingSlotSubscription) this.parkingSlotSubscription.unsubscribe();
   }
 }

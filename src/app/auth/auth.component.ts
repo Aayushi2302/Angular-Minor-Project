@@ -37,7 +37,6 @@ export class AuthComponent implements OnDestroy{
 
         this.username = this.formElement.value.username;
         this.password = this.formElement.value.password;
-        this.role = this.userService.getRole();
         
         this.loginSubscription= 
         this.authService.login(this.username, this.password)
@@ -51,10 +50,6 @@ export class AuthComponent implements OnDestroy{
                     "Success", 
                     resData.message
                 );
-                if (this.role === "admin")  this.router.navigate(["employees"]);
-                else this.router.navigate(["customers"])
-                
-                
             },
             error: (errorRes: HttpErrorResponse) => {
                 this.customMessageService.displayToast(
@@ -71,6 +66,10 @@ export class AuthComponent implements OnDestroy{
         this.userService.getUserProfile().subscribe({
             next: (resData: SuccessResponseInterface<UserInterface>) => {
                 sessionStorage.setItem("user", JSON.stringify(resData.data[0]));
+                this.role = this.userService.getRole();
+                if (this.role === "admin")  this.router.navigate(["employees"]);
+                else this.router.navigate(["customers"]);
+                
             },
             error: (errorRes: HttpErrorResponse) => {
                 this.customMessageService.displayToast(

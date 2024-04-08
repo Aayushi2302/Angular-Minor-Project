@@ -1,0 +1,47 @@
+:host ::ng-deep .p-dialog-title {
+    color: #251605;
+    font-size: 1.5em;
+}
+
+:host ::ng-deep .p-button{
+   width: 30px;
+   height: 30px;
+   background-color: #251605;
+   border-radius: 0;
+   color: white
+}
+
+:host ::ng-deep .p-datepicker-trigger{
+    width: 50px;
+    height: 50px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+form{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 20px;
+}
+form div{
+    margin: 1em;
+}
+
+form div input {
+    width: 18em;
+}
+
+.help-message {
+    color: #d90429;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid #d90429;
+}
+
+.submit-btn{
+    width: 17em;
+    height: 3em;
+    border-radius: 8px;
+}

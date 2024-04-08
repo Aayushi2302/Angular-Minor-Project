@@ -1,86 +1,89 @@
 <p-dialog header="Customer Form" (onHide)="onClose()" [modal]="true" [(visible)]="visible" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
     <form (ngSubmit)="onSubmit()" #form="ngForm">
-        <div>
-            <span class="p-float-label">
-                <input pInputText id="name" 
-                    ngModel name="name" 
-                    required 
-                    pattern="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
-                    #name="ngModel"
-                />
-                <label for="name">Name</label> 
-            </span>
-            <div *ngIf="!name.valid && (name.dirty || name.touched)" class="help-message">
-                <small *ngIf="name.control.errors?.required; else invalidName">
-                    *Name is required.
-                </small>
-                <ng-template #invalidName>
-                    <small>
-                        *Name is invalid.
+        <ng-container ngModelGroup="customer-data">
+            <div>
+                <span class="p-float-label">
+                    <input pInputText id="name" 
+                        ngModel name="name" 
+                        required 
+                        pattern="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
+                        #name="ngModel"
+                    />
+                    <label for="name">Name</label> 
+                </span>
+                <div *ngIf="!name.valid && (name.dirty || name.touched)" class="help-message">
+                    <small *ngIf="name.control.errors?.required; else invalidName">
+                        *Name is required.
                     </small>
-                </ng-template>
+                    <ng-template #invalidName>
+                        <small>
+                            *Name is invalid.
+                        </small>
+                    </ng-template>
+                </div>
             </div>
-        </div>
-        <div>
-            <span class="p-float-label">
-                <input pInputText id="mobile_no" 
-                    ngModel name="mobile_no" 
-                    required 
-                    #mobile_no="ngModel"
-                    pattern="[6-9][0-9]{9}$"
-                />
-                <label for="mobile_no">Mobile No</label> 
-            </span>
-            <div *ngIf="!mobile_no.valid && (mobile_no.dirty || mobile_no.touched)" class="help-message">
-                <small *ngIf="mobile_no.control.errors?.required; else invalidMobileNo">
-                    *Mobile No. is required.
-                </small>
-                <ng-template #invalidMobileNo>
-                    <small>
-                        *Mobile No. is invalid.
+            <div>
+                <span class="p-float-label">
+                    <input pInputText id="mobile_no" 
+                        ngModel name="mobile_no" 
+                        required 
+                        #mobile_no="ngModel"
+                        pattern="[6-9][0-9]{9}$"
+                    />
+                    <label for="mobile_no">Mobile No</label> 
+                </span>
+                <div *ngIf="!mobile_no.valid && (mobile_no.dirty || mobile_no.touched)" class="help-message">
+                    <small *ngIf="mobile_no.control.errors?.required; else invalidMobileNo">
+                        *Mobile No. is required.
                     </small>
-                </ng-template>
+                    <ng-template #invalidMobileNo>
+                        <small>
+                            *Mobile No. is invalid.
+                        </small>
+                    </ng-template>
+                </div>
             </div>
-        </div>
+    
+            <div>
+                <span class="p-float-label">
+                    <input pInputText id="vehicle_no" 
+                        ngModel name="vehicle_no" 
+                        required 
+                        #vehicle_no="ngModel"
+                        pattern="^[A-Z]{2}[-][0-9]{2}[-][A-Z]{2}[-][0-9]{4}$"
+                    />
+                    <label for="vehicle_no">Vehicle No</label> 
+                </span>
+                <div *ngIf="!vehicle_no.valid && (vehicle_no.dirty || vehicle_no.touched)" class="help-message">
+                    <small *ngIf="vehicle_no.control.errors?.required; else invalidVehicleNo">
+                        *Vehicle No. is required.
+                    </small>
+                    <ng-template #invalidVehicleNo>
+                        <small>
+                            *Vehicle No. is invalid.
+                        </small>
+                    </ng-template>
+                </div>
+            </div>
+    
+            <div class="card flex justify-content-center">
+                <p-dropdown
+                        ngModel name="vehicle_type_name"
+                        [options]="vehicleTypes" 
+                        [showClear]="true" 
+                        placeholder="Vehicle Type"
+                        class="dropdown"
+                        required
+                        #vehicleTypeName="ngModel"
+                ></p-dropdown>
+                <div *ngIf="!vehicleTypeName.valid && (vehicleTypeName.dirty || vehicleTypeName.touched)" class="help-message">
+                    <small *ngIf="vehicleTypeName.control.errors?.required">
+                        *Vehicle Type Name is required.
+                    </small>
+                </div>
+            </div>
+        </ng-container>
 
-        <div>
-            <span class="p-float-label">
-                <input pInputText id="vehicle_no" 
-                    ngModel name="vehicle_no" 
-                    required 
-                    #vehicle_no="ngModel"
-                    pattern="^[A-Z]{2}[-][0-9]{2}[-][A-Z]{2}[-][0-9]{4}$"
-                />
-                <label for="vehicle_no">Vehicle No</label> 
-            </span>
-            <div *ngIf="!vehicle_no.valid && (vehicle_no.dirty || vehicle_no.touched)" class="help-message">
-                <small *ngIf="vehicle_no.control.errors?.required; else invalidVehicleNo">
-                    *Vehicle No. is required.
-                </small>
-                <ng-template #invalidVehicleNo>
-                    <small>
-                        *Vehicle No. is invalid.
-                    </small>
-                </ng-template>
-            </div>
-        </div>
-
-        <div class="card flex justify-content-center">
-            <p-dropdown
-                    ngModel name="vehicle_type_name"
-                    [options]="vehicleTypes" 
-                    [showClear]="true" 
-                    placeholder="Vehicle Type"
-                    class="dropdown"
-                    required
-                    #vehicleTypeName="ngModel"
-            ></p-dropdown>
-            <div *ngIf="!vehicleTypeName.valid && (vehicleTypeName.dirty || vehicleTypeName.touched)" class="help-message">
-                <small *ngIf="vehicleTypeName.control.errors?.required">
-                    *Vehicle Type Name is required.
-                </small>
-            </div>
-        </div>
         <button type="submit" pButton label="Submit" class="submit-btn" [disabled]="!form.valid"></button>
     </form>
 </p-dialog>

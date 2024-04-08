@@ -17,28 +17,33 @@ export class CreateUpdateVehicleTypeComponent implements OnInit, OnDestroy{
 
     vehicleTypeService = inject(VehicleTypeService);
     customMessageService = inject(CustomMessageService);
-    visible: boolean = true;
     router = inject(Router);
-    editMode: boolean;
 
-    vehicleType: any = {};
     @ViewChild('form') formElement: NgForm;
+
     vehicleTypeSubscription: Subscription;
 
+    visible: boolean = true;
+    editMode: boolean;
+    vehicleType: any = {};
+
     ngOnInit() {
-        this.vehicleTypeService.editMode.subscribe((editCheck: boolean) => {
-            this.editMode = editCheck;
-        });
-        this.vehicleTypeService.vehicleType.subscribe((vehicleTypeData) => {
-            this.vehicleType = vehicleTypeData;
+        this.vehicleTypeService.editMode.subscribe((emittedData: boolean) => this.editMode = emittedData);
+        this.vehicleTypeService.selectedVehicleType.subscribe((emittedData: VehicleTypeInterface) => {
+            this.vehicleType = emittedData;
         })
     }
 
     ngAfterViewInit() {
-        if (this.vehicleType) {
-            console.log(this.formElement);
-            // console.log(this.formElement.controls["price_per_hour"].setValue(this.vehicleType.vehicle_type_name));
-            // this.formElement.controls["price_per_hour"].setValue(this.vehicleType.vehicle_type_name)
+        if (this.editMode) {
+            setTimeout(()=> {
+                this.formElement.form.setValue({
+                    "vehicle-type-data": {
+                        "vehicle_type_name": this.vehicleType.vehicle_type_name,
+                        "price_per_hour": this.vehicleType.price_per_hour
+                    }
+                })
+            }, 0);
         }
     }
 
@@ -72,6 +77,6 @@ export class CreateUpdateVehicleTypeComponent implements OnInit, OnDestroy{
     }
 
     ngOnDestroy() {
-        // this.vehicleTypeSubscription.unsubscribe();
+        if (this.vehicleTypeSubscription) this.vehicleTypeSubscription.unsubscribe();
     }
 }

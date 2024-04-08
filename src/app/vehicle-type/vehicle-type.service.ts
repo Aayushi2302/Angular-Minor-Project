@@ -12,7 +12,7 @@ import { BehaviorSubject, throwError, Subject } from "rxjs";
 export class VehicleTypeService {
 
     httpClient = inject(HttpClient);
-    vehicleType = new BehaviorSubject<VehicleTypeInterface>(null);
+    selectedVehicleType = new BehaviorSubject<VehicleTypeInterface>(null);
     editMode = new BehaviorSubject(null);
 
     getAllVehicleTypes() {

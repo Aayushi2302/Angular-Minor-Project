@@ -1,49 +1,51 @@
 <p-dialog header="Vehicle Type Form" (onHide)="onClose()" [(visible)]="visible" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
     <form (ngSubmit)="onSubmit()" #form="ngForm">
-        <div>
-            <small *ngIf="editMode">Vehicle Type Name cannot be edited.</small>
-            <span class="p-float-label">
-                <input pInputText id="vehicle_type_name"
-                    ngModel name="vehicle_type_name" 
-                    required 
-                    pattern="^[a-zA-Z -]{3,20}$"
-                    #typeName="ngModel"
-                    [disabled]="editMode"
-                />
-                <label for="vehicle_type_name">Vehicle Type Name</label> 
-            </span>
-            <div *ngIf="!typeName.valid && (typeName.dirty || typeName.touched)" class="help-message">
-                <small *ngIf="typeName.control.errors?.required; else invalidTypeName">
-                    *Vehicle Type Name is required.
-                </small>
-                <ng-template #invalidTypeName>
-                    <small>
-                        *Vehicle Type Name is invalid.
+        <ng-container ngModelGroup="vehicle-type-data">
+            <div>
+                <span class="p-float-label">
+                    <input pInputText id="vehicle_type_name"
+                        ngModel name="vehicle_type_name" 
+                        required 
+                        pattern="^[a-zA-Z -]{3,20}$"
+                        #typeName="ngModel"
+                        [disabled]="editMode"
+                    />
+                    <label for="vehicle_type_name">Vehicle Type Name</label> 
+                </span>
+                <small *ngIf="editMode">Vehicle Type Name cannot be edited.</small>
+                <div *ngIf="!typeName.valid && (typeName.dirty || typeName.touched)" class="help-message">
+                    <small *ngIf="typeName.control.errors?.required; else invalidTypeName">
+                        *Vehicle Type Name is required.
                     </small>
-                </ng-template>
+                    <ng-template #invalidTypeName>
+                        <small>
+                            *Vehicle Type Name is invalid.
+                        </small>
+                    </ng-template>
+                </div>
             </div>
-        </div>
-        <div>
-            <span class="p-float-label">
-                <input pInputText id="price_per_hour"
-                    ngModel name="price_per_hour" 
-                    required 
-                    type="number"
-                    #pricePerHour="ngModel"
-                />
-                <label for="price_per_hour">Price Per Hour</label> 
-            </span>
-            <div *ngIf="!pricePerHour.valid && (pricePerHour.dirty || pricePerHour.touched)" class="help-message">
-                <small *ngIf="pricePerHour.control.errors?.required; else invalidPricePerHour">
-                    *Price Per Hour is required.
-                </small>
-                <ng-template #invalidPricePerHour>
-                    <small>
-                        *Price Per Hour is invalid.
+            <div>
+                <span class="p-float-label">
+                    <input pInputText id="price_per_hour"
+                        ngModel name="price_per_hour" 
+                        required 
+                        type="number"
+                        #pricePerHour="ngModel"
+                    />
+                    <label for="price_per_hour">Price Per Hour</label> 
+                </span>
+                <div *ngIf="!pricePerHour.valid && (pricePerHour.dirty || pricePerHour.touched)" class="help-message">
+                    <small *ngIf="pricePerHour.control.errors?.required; else invalidPricePerHour">
+                        *Price Per Hour is required.
                     </small>
-                </ng-template>
+                    <ng-template #invalidPricePerHour>
+                        <small>
+                            *Price Per Hour is invalid.
+                        </small>
+                    </ng-template>
+                </div>
             </div>
-        </div>
+        </ng-container>
         <button type="submit" pButton label="Submit" class="submit-btn" [disabled]="!form.valid"></button>
     </form>
 </p-dialog>

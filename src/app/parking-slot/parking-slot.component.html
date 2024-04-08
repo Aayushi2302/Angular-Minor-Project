@@ -2,8 +2,8 @@
     <h1>Parking Slots</h1>
     <div class="feature-btn">
         <button type="submit" *ngIf="role==='admin'" pButton label="+Add Parking Slot" (click)="addParkingSlot()"></button>
-        <button type="submit" *ngIf="!(role==='admin')" pButton label="Reserve Parking Slot"></button>
-        <button type="submit" *ngIf="!(role==='admin')" pButton label="Vacate Parking Slot"></button>
+        <button type="submit" *ngIf="!(role==='admin')" pButton label="Reserve Parking Slot" (click)="reserveParkingSlot()"></button>
+        <button type="submit" *ngIf="!(role==='admin')" pButton label="Vacate Parking Slot" (click)="vacateParkingSlot()"></button>
     </div>
     <div class="info-bar">
         <div class="info-bar-box" id="vacant">

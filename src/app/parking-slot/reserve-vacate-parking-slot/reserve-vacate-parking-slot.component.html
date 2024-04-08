@@ -1,1 +1,46 @@
-<p>reserve-parking-slot works!</p>
+<p-dialog header="Parking Slot Form" (onHide)="onClose()" [modal]="true" [(visible)]="visible" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    <form (ngSubmit)="onSubmit()" #form="ngForm">
+        <div>
+            <span class="p-float-label">
+                <input pInputText id="vehicle_no"
+                    ngModel name="vehicle_no" 
+                    required 
+                    pattern="^[A-Z]{2}[-][0-9]{2}[-][A-Z]{2}[-][0-9]{4}$"
+                    #vehicleNo="ngModel"
+                />
+                <label for="vehicle_no">Vehicle No</label> 
+            </span>
+            <div *ngIf="!vehicleNo.valid && (vehicleNo.dirty || vehicleNo.touched)" class="help-message">
+                <small *ngIf="vehicleNo.control.errors?.required; else invalidVehicleNo">
+                    *Vehicle No is required.
+                </small>
+                <ng-template #invalidVehicleNo>
+                    <small>
+                        *Vehicle No is invalid.
+                    </small>
+                </ng-template>
+            </div>
+        </div>
+        <div *ngIf="!vacate">
+            <span class="p-float-label">
+                <p-calendar 
+                    ngModel name="out_date"
+                    inputId="out_date"
+                    [showIcon]="true"
+                    appendTo="body"
+                    [required]="true"
+                    [minDate]="today"
+                    dateFormat="dd-mm-yy"
+                    #outDate="ngModel"
+                ></p-calendar>
+                <label for="out_date">Out Date</label>
+            </span>
+            <div *ngIf="!outDate.valid && (outDate.dirty || outDate.touched)" class="help-message">
+                <small *ngIf="outDate.control.errors?.required">
+                    *Out Date is required.
+                </small>
+            </div>
+        </div>
+        <button type="submit" pButton label="Submit" class="submit-btn" [disabled]="!form.valid"></button>
+    </form>
+</p-dialog>

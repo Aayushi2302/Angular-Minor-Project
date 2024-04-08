@@ -55,11 +55,29 @@ export class CustomerComponent implements OnInit, OnDestroy{
   updateCustomer(index: number) {
     this.customerService.selectedCustomer.next(this.customers[index]);
     this.router.navigate([index+1, "update"], {relativeTo: this.activeRoute});
-    this.customerService.editMode.next(false);
+    this.customerService.editMode.next(true);
   }
 
   deleteCustomer(index: number) {
-
+    let customerId = this.customers[index].customer_id;
+    this.customersGetSubscription=
+      this.customerService.deleteCustomer(customerId)
+      .subscribe({
+        next: (resData: SuccessResponseInterface<CustomerInterface>) => {
+          this.customMessageService.displayToast(
+            "success",
+            "Success",
+            resData.message
+          )
+        },
+        error: (errRes: HttpErrorResponse) => {
+          this.customMessageService.displayToast(
+            "error",
+            "Error",
+            errRes.error.message
+          )
+        }
+      });
   }
 
   ngOnDestroy() {
