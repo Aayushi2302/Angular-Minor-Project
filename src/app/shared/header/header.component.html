@@ -4,10 +4,11 @@
     </ng-template>
     <ng-template pTemplate="end">
         <div class="user-profile">
-            <img src="../../../assets/user.png" alt="user-avatar">
+            <img src="../../../assets/user.png" alt="user-avatar" (click)="menu.toggle($event)">
+            <p-tieredMenu #menu class="tiered-menu" [model]="dropdownOptions" [popup]="true"></p-tieredMenu>
             <div class="profile-text">
-                <h4>Aayushi Sharma</h4>
-                <p>Admin</p>
+                <h4>{{ name | titlecase}}</h4>
+                <p>{{ role | titlecase }}</p>
             </div>
         </div>
     </ng-template>

@@ -22,4 +22,9 @@ export class UserService {
         let userProfile = JSON.parse(sessionStorage.getItem("user"));
         return userProfile.role;
     }
+
+    getName() {
+        let userProfile = JSON.parse(sessionStorage.getItem("user"));
+        return userProfile.name;
+    }
 }

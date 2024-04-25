@@ -26,6 +26,8 @@ p-tag {
 
 th, td{
     text-align: center;
+    white-space: nowrap;
+    height: 5em;
 }
 
 .emp-status {

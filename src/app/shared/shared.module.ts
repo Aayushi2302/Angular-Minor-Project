@@ -3,6 +3,7 @@ import { HeaderComponent } from "./header/header.component";
 import { FooterComponent } from "./footer/footer.component";
 import { CommonModule } from "@angular/common";
 import { MenubarModule } from "primeng/menubar";
+import { TieredMenuModule } from 'primeng/tieredmenu';
 
 @NgModule({
     declarations: [
@@ -11,7 +12,8 @@ import { MenubarModule } from "primeng/menubar";
     ],
     imports: [
         CommonModule,
-        MenubarModule
+        MenubarModule,
+        TieredMenuModule
     ],
     exports: [
         HeaderComponent,

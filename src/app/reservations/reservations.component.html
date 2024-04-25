@@ -5,8 +5,10 @@
             [value]="reservations" 
             [paginator]="true"
             [rows]="3"
+            [scrollable]="true"
+            scrollDirection="horizontal"
             [showCurrentPageReport]="true"
-            [tableStyle]="{ 'min-width': '50rem' }"
+            [tableStyle]="{ 'min-width': '100rem' }"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [rowsPerPageOptions]="[5, 10, 20]"
         >
@@ -25,15 +27,15 @@
             </ng-template>
             <ng-template pTemplate="body" let-reservations>
                 <tr>
-                    <td>{{reservations.booking_id}}</td>
-                    <td>{{reservations.customer_name}}</td>
-                    <td>{{reservations.parking_slot_no}}</td>
-                    <td>{{reservations.in_date}}</td>
-                    <td>{{reservations.in_time}}</td>
-                    <td>{{reservations.out_date}}</td>
-                    <td>{{reservations.out_time}}</td>
-                    <td>{{reservations.hours_spent}}</td>
-                    <td>{{reservations.charges}}</td>
+                    <td style="width:20%">{{reservations.booking_id}}</td>
+                    <td style="width:20%">{{reservations.name}}</td>
+                    <td style="width:20%">{{reservations.parking_slot_no}}</td>
+                    <td style="width:20%">{{reservations.in_date}}</td>
+                    <td style="width:20%">{{reservations.in_time}}</td>
+                    <td style="width:20%">{{reservations.out_date}}</td>
+                    <td style="width:20%">{{reservations.out_time}}</td>
+                    <td style="width:20%">{{reservations.hours}}</td>
+                    <td style="width:20%">{{reservations.charges | currency: 'INR'}}</td>
                 </tr>
             </ng-template>
         </p-table>

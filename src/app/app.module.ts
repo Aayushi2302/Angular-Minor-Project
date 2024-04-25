@@ -4,8 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { ViewProfileComponent } from './manage-user-profile/view-profile/view-profile.component';
-import { ChangePasswordComponent } from './manage-user-profile/change-password/change-password.component';
+
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core.module';
@@ -16,9 +15,7 @@ import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ViewProfileComponent,
-    ChangePasswordComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,

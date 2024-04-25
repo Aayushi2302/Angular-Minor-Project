@@ -21,4 +21,13 @@ export class AuthService {
                     }
                 );
     }
+
+    logout() {
+        const logoutUrl = environment.apiUrl + "/v1/logout";
+        sessionStorage.clear();
+        this.httpClient.post<SuccessResponseInterface<any>>(
+            logoutUrl,
+            {}
+        )
+    }
 }

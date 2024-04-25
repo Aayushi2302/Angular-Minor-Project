@@ -1,6 +1,8 @@
+import { AuthService } from './../../auth/auth.service';
 import { Component, OnInit, inject } from '@angular/core';
 import { MenuItem } from "primeng/api";
 import { UserService } from '../user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,12 +10,45 @@ import { UserService } from '../user/user.service';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit {
+
+  userService = inject(UserService);
+  authService = inject(AuthService);
+  router = inject(Router);
+  
   items: MenuItem[] | undefined;
   role: string;
-  userService = inject(UserService);
+  name: string;
+  dropdownOptions: MenuItem[] | undefined;
 
   ngOnInit() {
+
+    this.dropdownOptions = [
+      {
+        label: "View Profile",
+        icon: "pi pi-user",
+        command: () => {
+          this.router.navigate(["view-profile"]);
+        }
+      },
+      {
+        label: "Change Password",
+        icon: "pi pi-key",
+        command: () => {
+          this.router.navigate(["change-password"]);
+        }
+      },
+      {
+        label: "Logout",
+        icon: "pi pi-sign-out",
+        command: () => {
+          this.authService.logout();
+          this.router.navigate(["login"]);
+        }
+      }
+    ]
+
     this.role = this.userService.getRole();
+    this.name = this.userService.getName();
     this.items = [ 
       {
         label: this.role === "admin" ? "Employee" : "Customer", 
