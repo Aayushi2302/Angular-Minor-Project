@@ -1,3 +1,4 @@
+import { OnInit, AfterViewInit } from '@angular/core';
 import { CustomMessageService } from './../../shared/custom-message.service';
 import { Component, OnDestroy, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
@@ -6,16 +7,18 @@ import { EmployeeService } from '../employee.service';
 import { SuccessResponseInterface } from '../../shared/success-response.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
+import { EmployeeInterface } from '../employee.interface';
 
 @Component({
   selector: 'app-create-update-employee',
   templateUrl: './create-update-employee.component.html',
   styleUrl: './create-update-employee.component.css'
 })
-export class CreateUpdateEmployeeComponent implements OnDestroy{
+export class CreateUpdateEmployeeComponent implements OnInit, AfterViewInit, OnDestroy{
   
   visible: boolean = true;
-  router = inject(Router);
+  editMode: boolean;
+  selectedEmployeeId: string;
   genders: Array<string> = ["Male", "Female", "Other"];
   selectedGender = "Male";
   roles = [
@@ -23,24 +26,84 @@ export class CreateUpdateEmployeeComponent implements OnDestroy{
     {name: "attendant", isDisable: false}
   ]
   employee : any = {}
+  router = inject(Router);
   employeeService= inject(EmployeeService);
   customMessageService = inject(CustomMessageService);
   employeeSubscription: Subscription;
   
   @ViewChild('form') formElement: NgForm;
 
-  onSubmit() {
+  ngOnInit() {
+    this.employeeService.selectedEmployee.subscribe((emittedData: EmployeeInterface) => {
+      this.employee = emittedData;
+    });
 
-    this.employee.username = this.formElement.value.username;
-    this.employee.name = this.formElement.value.name;
-    this.employee.age = this.formElement.value.age;
-    this.employee.gender = this.formElement.value.gender;
-    this.employee.mobile_no = this.formElement.value.mobile_no;
-    this.employee.email_address = this.formElement.value.email;
-    this.employee.role = this.formElement.value.role.name;
-   
+    this.employeeService.editMode.subscribe((emittedData: boolean) => this.editMode = emittedData);
+  }
+
+  ngAfterViewInit() {
+    if (this.editMode){
+      setTimeout(()=>{
+        this.formElement.form.setValue({
+          "employee-data": {
+            username: this.employee.username,
+            name: this.employee.name,
+            age: this.employee.age,
+            gender: this.employee.gender,
+            mobile_no: this.employee.mobile_no,
+            email: this.employee.email_address,
+            role: {
+              name: this.employee.role,
+              isDisable: false
+            }
+          }
+        })
+        this.selectedEmployeeId = this.employee.emp_id;
+      }, 0);
+    }
+  }
+
+  getEmployeeDetails() {
+    this.employee = {};
+    this.employee.username = this.formElement.value["employee-data"].username;
+    this.employee.name = this.formElement.value["employee-data"].name;
+    this.employee.age = this.formElement.value["employee-data"].age;
+    this.employee.gender = this.formElement.value["employee-data"].gender;
+    this.employee.mobile_no = this.formElement.value["employee-data"].mobile_no;
+    this.employee.email_address = this.formElement.value["employee-data"].email;
+    this.employee.role = this.formElement.value["employee-data"].role.name;
+  }
+
+  onSubmit() {
+    this.getEmployeeDetails();
+    if (!this.editMode) this.createEmployee();
+    else this.updateEmployee();
+    console.log(this.formElement);
+  }
+
+  createEmployee() {
     this.employeeSubscription=
     this.employeeService.createNewEmployee(this.employee).subscribe({
+      next: (resData: SuccessResponseInterface<any>) => {
+        this.customMessageService.displayToast(
+          "success",
+          "Success",
+          resData.message
+        )
+      },
+      error: (errRes: HttpErrorResponse) => {
+        this.customMessageService.displayToast(
+          "error",
+          "Error",
+          errRes.error.message
+        )
+      }
+    });
+  }
+
+  updateEmployee() {
+    this.employeeSubscription=
+    this.employeeService.updateEmployeeDetails(this.selectedEmployeeId, this.employee).subscribe({
       next: (resData: SuccessResponseInterface<[]>) => {
         this.customMessageService.displayToast(
           "success",
@@ -56,7 +119,6 @@ export class CreateUpdateEmployeeComponent implements OnDestroy{
         )
       }
     });
-    this.onClose();
   }
 
   onClose() {
@@ -65,6 +127,6 @@ export class CreateUpdateEmployeeComponent implements OnDestroy{
   }
 
   ngOnDestroy() {
-    this.employeeSubscription.unsubscribe();
+    if(this.employeeSubscription) this.employeeSubscription.unsubscribe();
   }
 }

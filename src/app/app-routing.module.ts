@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { AuthComponent } from "./auth/auth.component";
 import { authGuard } from "./guards/auth.guard";
 import { allowedUsers } from "./guards/user-role.guard";
+import { PageNotFoundComponent } from "./shared/page-not-found/page-not-found.component";
 
 const routes : Routes = [
     {path: "", redirectTo: "login", pathMatch: "full"},
@@ -43,6 +44,7 @@ const routes : Routes = [
             import("./manage-user-profile/manage-user-profile.module").then(m => m.ManageUserProfileModule),
         canActivate: [authGuard]
     },
+    {path: "**", component: PageNotFoundComponent}
     
 ]
 

@@ -8,6 +8,7 @@ import { ButtonModule } from "primeng/button";
 import { DialogModule } from 'primeng/dialog';
 import { FormsModule } from "@angular/forms";
 import { InputTextModule } from "primeng/inputtext";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
     declarations: [
@@ -17,6 +18,7 @@ import { InputTextModule } from "primeng/inputtext";
     imports: [
         CommonModule,
         VehicleTypeRoutingModule,
+        SharedModule,
         TableModule,
         ButtonModule,
         DialogModule,

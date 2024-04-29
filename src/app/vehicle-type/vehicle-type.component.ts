@@ -6,6 +6,7 @@ import { SuccessResponseInterface } from "../shared/success-response.interface";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
+import { CustomMessageService } from '../shared/custom-message.service';
 
 @Component({
     selector: "app-vehicle-type",
@@ -14,13 +15,15 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 export class VehicleTypeComponent implements OnInit, OnDestroy{
 
+    vehicleTypes: VehicleTypeInterface[];
+    vehicleTypeSubscription: Subscription;
+    role: string;
+    loading = true;
     vehicleTypeService = inject(VehicleTypeService);
     userService = inject(UserService);
     router = inject(Router);
     activeRoute = inject(ActivatedRoute);
-    vehicleTypes: VehicleTypeInterface[];
-    vehicleTypeSubscription: Subscription;
-    role: string;
+    customMessageService = inject(CustomMessageService);
     
     ngOnInit() {
         this.role = this.userService.getRole();
@@ -29,16 +32,23 @@ export class VehicleTypeComponent implements OnInit, OnDestroy{
         .subscribe({
             next: (resData: SuccessResponseInterface<VehicleTypeInterface>) => {
                 this.vehicleTypes = resData.data;
+                setTimeout(()=>{
+                    this.loading = false;
+                }, 1000);
             },
             error: (errRes: HttpErrorResponse) => {
-                console.log(errRes);
+                this.customMessageService.displayToast(
+                    "error",
+                    "Error",
+                    errRes.error.message
+                )
             }
         })
     }
 
     addVehicleType() {
-        this.router.navigate(["new"], {relativeTo: this.activeRoute});
         this.vehicleTypeService.editMode.next(false);
+        this.router.navigate(["new"], {relativeTo: this.activeRoute});
     }
 
     updateVehicleType(index: number) {

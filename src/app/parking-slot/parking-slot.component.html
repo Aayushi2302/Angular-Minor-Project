@@ -1,5 +1,6 @@
 <div class="container">
     <h1>Parking Slots</h1>
+    <app-loader *ngIf="loading"></app-loader>
     <div class="feature-btn">
         <button type="submit" *ngIf="role==='admin'" pButton label="+Add Parking Slot" (click)="addParkingSlot()"></button>
         <button type="submit" *ngIf="!(role==='admin')" pButton label="Reserve Parking Slot" (click)="reserveParkingSlot()"></button>

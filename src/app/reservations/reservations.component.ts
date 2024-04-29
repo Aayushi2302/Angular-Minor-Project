@@ -19,6 +19,7 @@ export class ReservationsComponent implements OnInit, OnDestroy {
   reservationsSubscription: Subscription;
 
   reservations: ReservationsInterface[];
+  loading = true;
 
   ngOnInit() {
     this.getAllReservations();
@@ -30,6 +31,9 @@ export class ReservationsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: ( resData: SuccessResponseInterface<ReservationsInterface>) => {
           this.reservations = resData.data;
+          setTimeout(()=>{
+            this.loading = false;
+          }, 1000);
         },
         error: (errRes: HttpErrorResponse) => {
           this.customMessageService.displayToast(

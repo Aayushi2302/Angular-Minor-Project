@@ -90,7 +90,6 @@ export class CreateUpdateCustomerComponent implements OnInit, OnDestroy, AfterVi
     this.getCustomerDetails();
     if (!this.editMode) this.createCustomer();
     else this.updateCustomer();
-    this.onClose();
   }
 
   getCustomerDetails() {

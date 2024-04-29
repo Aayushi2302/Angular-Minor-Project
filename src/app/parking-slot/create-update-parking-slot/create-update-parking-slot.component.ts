@@ -91,7 +91,6 @@ export class CreateUpdateParkingSlotComponent implements OnInit, AfterViewInit, 
   onSubmit() {
     if (!this.editMode)   this.addParkingSlot();
     else this.updateParkingSlotStatus();
-    this.onClose();
   }
 
   addParkingSlot() {

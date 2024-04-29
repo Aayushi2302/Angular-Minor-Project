@@ -23,14 +23,12 @@ export class RefreshTokenService {
         //     refreshTokenUrl,
         //     {},
         //     {headers: {"Authorization": `Bearer ${refreshToken}`}}
-        // ).pipe(take(1)).subscribe({
+        // ).subscribe({
         //     next: (resData: SuccessResponseInterface<RefreshTokenInterface>) => {
         //         console.log(resData);
         //     },
         //     error: (errRes: HttpErrorResponse) => {
         //         console.log(errRes);
-        //         console.log("Refresh request sent : ", this.counter);
-        //         this.counter++;
         //     }
         // });
     }

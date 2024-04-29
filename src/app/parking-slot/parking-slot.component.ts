@@ -25,6 +25,7 @@ export class ParkingSlotComponent implements OnInit, OnDestroy{
 
   role: string;
   parkingSlots: ParkingSlotInterface[];
+  loading = true;
 
 
   ngOnInit() {
@@ -38,6 +39,9 @@ export class ParkingSlotComponent implements OnInit, OnDestroy{
       .subscribe({
         next: (resData: SuccessResponseInterface<ParkingSlotInterface>) => {
           this.parkingSlots = resData.data;
+          setTimeout(()=>{
+            this.loading = false;
+          }, 1000);
         },
         error: (errRes: HttpErrorResponse) => {
           this.customMessageService.displayToast(

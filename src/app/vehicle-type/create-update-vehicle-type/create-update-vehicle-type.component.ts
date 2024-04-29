@@ -15,17 +15,16 @@ import { HttpErrorResponse } from "@angular/common/http";
 })
 export class CreateUpdateVehicleTypeComponent implements OnInit, OnDestroy{
 
-    vehicleTypeService = inject(VehicleTypeService);
-    customMessageService = inject(CustomMessageService);
-    router = inject(Router);
-
-    @ViewChild('form') formElement: NgForm;
-
-    vehicleTypeSubscription: Subscription;
-
     visible: boolean = true;
     editMode: boolean;
     vehicleType: any = {};
+    selectedVehicleTypeId: string;
+    vehicleTypeService = inject(VehicleTypeService);
+    customMessageService = inject(CustomMessageService);
+    router = inject(Router);
+    vehicleTypeSubscription: Subscription;
+
+    @ViewChild('form') formElement: NgForm;
 
     ngOnInit() {
         this.vehicleTypeService.editMode.subscribe((emittedData: boolean) => this.editMode = emittedData);
@@ -43,17 +42,31 @@ export class CreateUpdateVehicleTypeComponent implements OnInit, OnDestroy{
                         "price_per_hour": this.vehicleType.price_per_hour
                     }
                 })
+                this.selectedVehicleTypeId = this.vehicleType.type_id;
             }, 0);
         }
     }
 
-    onSubmit(){
-        this.vehicleType.vehicle_type_name = this.formElement.value.vehicle_type_name;
-        this.vehicleType.price_per_hour = this.formElement.value.price_per_hour;
+    getVehicleTypeDetails() {
+        if (!this.editMode){
+            this.vehicleType = {};
+            this.vehicleType.vehicle_type_name = this.formElement.value["vehicle-type-data"].vehicle_type_name;
+        }
+        else    delete this.vehicleType.type_id;
+        this.vehicleType.price_per_hour = this.formElement.value["vehicle-type-data"].price_per_hour;
+    }
 
+    onSubmit(){
+        this.getVehicleTypeDetails();
+        if(!this.editMode)   this.createVehicleType();
+        else this.updateVehicleDetails();
+        this.onClose();
+    }
+
+    createVehicleType() {
         this.vehicleTypeSubscription =
         this.vehicleTypeService.createNewVehicleType(this.vehicleType).subscribe({
-            next: (resData: SuccessResponseInterface<[]>) => {
+            next: (resData: SuccessResponseInterface<any>) => {
                 this.customMessageService.displayToast(
                     "success",
                     "Success",
@@ -68,7 +81,26 @@ export class CreateUpdateVehicleTypeComponent implements OnInit, OnDestroy{
                 )
             }
         });
-        this.onClose();
+    }
+
+    updateVehicleDetails() {
+        this.vehicleTypeSubscription =
+        this.vehicleTypeService.updateVehicleType(this.selectedVehicleTypeId, this.vehicleType).subscribe({
+            next: (resData: SuccessResponseInterface<any>) => {
+                this.customMessageService.displayToast(
+                    "success",
+                    "Success",
+                    resData.message
+                )
+            },
+            error: (errRes: HttpErrorResponse) => {
+                this.customMessageService.displayToast(
+                    "error",
+                    "Error",
+                    errRes.error.message
+                )
+            }
+        });
     }
 
     onClose() {

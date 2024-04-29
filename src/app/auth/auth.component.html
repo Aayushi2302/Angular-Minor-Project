@@ -18,7 +18,7 @@
                 />
                 <label for="username">Username</label> 
             </span>
-            <div *ngIf="!username.valid && username.dirty" class="help-message">
+            <div *ngIf="!username.valid && (username.dirty || username.touched)" class="help-message">
                 <small *ngIf="username.control.errors?.required; else invalidUsername">
                     *Username is required.
                 </small>
@@ -38,7 +38,7 @@
                 </p-password>
                 <label for="password">Password</label>
             </span>
-            <div *ngIf="!password.valid && password.dirty" class="help-message">
+            <div *ngIf="!password.valid && (password.dirty || password.touched)" class="help-message">
                 <small *ngIf="password.control.errors?.required; else invalidPassword">
                     *Password is required.
                 </small>

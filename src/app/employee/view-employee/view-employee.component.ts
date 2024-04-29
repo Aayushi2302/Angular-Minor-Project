@@ -1,9 +1,8 @@
 import { CustomMessageService } from './../../shared/custom-message.service';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmployeeService } from '../employee.service';
 import { EmployeeInterface } from '../employee.interface';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -11,7 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './view-employee.component.html',
   styleUrl: './view-employee.component.css'
 })
-export class ViewEmployeeComponent implements OnInit, OnDestroy{
+export class ViewEmployeeComponent implements OnInit{
 
   employeeService = inject(EmployeeService);
   customMessageService = inject(CustomMessageService);
@@ -21,27 +20,13 @@ export class ViewEmployeeComponent implements OnInit, OnDestroy{
   employeeSubscription: Subscription;
 
   ngOnInit() {
-    this.employeeSubscription=
-    this.employeeService.selectedEmployee.subscribe({
-      next: (empData: EmployeeInterface) => {
-        this.employee = empData;
-      },
-      error: (errRes: HttpErrorResponse) => {
-        this.customMessageService.displayToast(
-          "error",
-          "Error",
-          errRes.error.message
-        )
-      }
+    this.employeeService.selectedEmployee.subscribe((emittedData: EmployeeInterface) => {
+      this.employee = emittedData;
     })
   }
 
   onClose() {
     this.visible = false;
     this.router.navigate(["employees"]);
-  }
-
-  ngOnDestroy() {
-    this.employeeSubscription.unsubscribe();
   }
 }

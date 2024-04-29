@@ -20,6 +20,7 @@ export class CustomerComponent implements OnInit, OnDestroy{
   customMessageService = inject(CustomMessageService);
   customersGetSubscription: Subscription;
   customers: CustomerInterface[];
+  loading = true;
 
   ngOnInit() {
     this.getAllCustomers();
@@ -31,6 +32,9 @@ export class CustomerComponent implements OnInit, OnDestroy{
       .subscribe({
         next: (resData: SuccessResponseInterface<CustomerInterface>) => {
           this.customers = resData.data;
+          setTimeout(()=>{
+            this.loading = false;
+          }, 1000);
         },
         error: (errRes: HttpErrorResponse) => {
           this.customMessageService.displayToast(

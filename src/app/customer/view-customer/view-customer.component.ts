@@ -30,7 +30,7 @@ export class ViewCustomerComponent implements OnInit{
           errRes.error.message
         );
       }
-    })
+    });
   }
 
   onClose() {

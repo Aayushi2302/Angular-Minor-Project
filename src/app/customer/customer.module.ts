@@ -12,6 +12,7 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from "primeng/inputtext";
 import { PasswordModule } from 'primeng/password';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import { PasswordModule } from 'primeng/password';
     ],
     imports: [
         CustomerRoutingModule,
+        SharedModule,
         RouterModule,
         CommonModule,
         FormsModule,

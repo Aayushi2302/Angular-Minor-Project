@@ -1,139 +1,138 @@
 <p-dialog header="Employee Form" (onHide)="onClose()" [modal]="true" [(visible)]="visible" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
     <form (ngSubmit)="onSubmit()" #form="ngForm">
-        <div>
-            <span class="p-float-label">
-                <input pInputText id="username" 
-                    ngModel name="username" 
-                    required 
-                    pattern="(^user@)([a-z]{5,})$"
-                    #username="ngModel"
-                />
-                <label for="username">Username</label> 
-            </span>
-            <div *ngIf="!username.valid && (username.dirty || username.touched)" class="help-message">
-                <small *ngIf="username.control.errors?.required; else invalidUsername">
-                    *Username is required.
-                </small>
-                <ng-template #invalidUsername>
-                    <small>
-                        *Username is invalid.
+        <ng-container ngModelGroup="employee-data">
+            <div>
+                <span class="p-float-label">
+                    <input pInputText id="username" 
+                        ngModel name="username" 
+                        required 
+                        pattern="(^user@)([a-z]{5,})$"
+                        #username="ngModel"
+                    />
+                    <label for="username">Username</label> 
+                </span>
+                <div *ngIf="!username.valid && (username.dirty || username.touched)" class="help-message">
+                    <small *ngIf="username.control.errors?.required; else invalidUsername">
+                        *Username is required.
                     </small>
-                </ng-template>
+                    <ng-template #invalidUsername>
+                        <small>
+                            *Username is invalid.
+                        </small>
+                    </ng-template>
+                </div>
             </div>
-        </div>
-        <div>
-            <span class="p-float-label">
-                <input pInputText id="name" 
-                    ngModel name="name" 
-                    required 
-                    pattern="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
-                    #name="ngModel"
-                />
-                <label for="name">Name</label> 
-            </span>
-            <div *ngIf="!name.valid && (name.dirty || name.touched)" class="help-message">
-                <small *ngIf="name.control.errors?.required; else invalidName">
-                    *Name is required.
-                </small>
-                <ng-template #invalidName>
-                    <small>
-                        *Name is invalid.
+            <div>
+                <span class="p-float-label">
+                    <input pInputText id="name" 
+                        ngModel name="name" 
+                        required 
+                        pattern="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
+                        #name="ngModel"
+                    />
+                    <label for="name">Name</label> 
+                </span>
+                <div *ngIf="!name.valid && (name.dirty || name.touched)" class="help-message">
+                    <small *ngIf="name.control.errors?.required; else invalidName">
+                        *Name is required.
                     </small>
-                </ng-template>
+                    <ng-template #invalidName>
+                        <small>
+                            *Name is invalid.
+                        </small>
+                    </ng-template>
+                </div>
             </div>
-        </div>
-        <div>
-            <span class="p-float-label">
-                <input pInputText id="age" 
-                    ngModel name="age" 
-                    required 
-                    type="number"
-                    #age="ngModel"
-                    [min]="15"
-                    [max]="60"
-                />
-                <label for="age">Age</label> 
-            </span>
-            <div *ngIf="!age.valid && (age.dirty || age.touched)" class="help-message">
-                <small *ngIf="age.control.errors?.required; else invalidAge">
-                    *Age is required.
-                </small>
-                <ng-template #invalidAge>
-                    <small>
-                        *Age is invalid.
+            <div>
+                <span class="p-float-label">
+                    <input pInputText id="age" 
+                        ngModel name="age" 
+                        required 
+                        type="number"
+                        #age="ngModel"
+                        [min]="15"
+                        [max]="60"
+                    />
+                    <label for="age">Age</label> 
+                </span>
+                <div *ngIf="!age.valid && (age.dirty || age.touched)" class="help-message">
+                    <small *ngIf="age.control.errors?.required; else invalidAge">
+                        *Age is required.
                     </small>
-                </ng-template>
+                    <ng-template #invalidAge>
+                        <small>
+                            *Age is invalid.
+                        </small>
+                    </ng-template>
+                </div>
             </div>
-        </div>
-        
-        <div class="p-field-radiobutton">
-            <p-radioButton 
-                id="gender"
-                *ngFor="let gender of genders" 
-                ngModel name="gender" 
-                [(ngModel)]="selectedGender" 
-                [value]="gender"
-                [label]="gender"
-                class="radio-button"
-            ></p-radioButton>
-        </div>
-        
-        <div>
-            <span class="p-float-label">
-                <input pInputText id="mobile_no" 
-                    ngModel name="mobile_no" 
-                    required 
-                    #mobile_no="ngModel"
-                    pattern="[6-9][0-9]{9}$"
-                />
-                <label for="mobile_no">Mobile No</label> 
-            </span>
-            <div *ngIf="!mobile_no.valid && (mobile_no.dirty || mobile_no.touched)" class="help-message">
-                <small *ngIf="mobile_no.control.errors?.required; else invalidMobileNo">
-                    *Mobile No. is required.
-                </small>
-                <ng-template #invalidMobileNo>
-                    <small>
-                        *Mobile No. is invalid.
+            <div class="p-field-radiobutton">
+                <p-radioButton 
+                    id="gender"
+                    *ngFor="let gender of genders" 
+                    ngModel name="gender" 
+                    [(ngModel)]="selectedGender" 
+                    [value]="gender"
+                    [label]="gender"
+                    class="radio-button"
+                ></p-radioButton>
+            </div>
+            <div>
+                <span class="p-float-label">
+                    <input pInputText id="mobile_no" 
+                        ngModel name="mobile_no" 
+                        required 
+                        #mobile_no="ngModel"
+                        pattern="[6-9][0-9]{9}$"
+                    />
+                    <label for="mobile_no">Mobile No</label> 
+                </span>
+                <div *ngIf="!mobile_no.valid && (mobile_no.dirty || mobile_no.touched)" class="help-message">
+                    <small *ngIf="mobile_no.control.errors?.required; else invalidMobileNo">
+                        *Mobile No. is required.
                     </small>
-                </ng-template>
+                    <ng-template #invalidMobileNo>
+                        <small>
+                            *Mobile No. is invalid.
+                        </small>
+                    </ng-template>
+                </div>
             </div>
-        </div>
+            <div>
+                <span class="p-float-label">
+                    <input pInputText id="email" 
+                        ngModel name="email" 
+                        required
+                        email
+                        #email="ngModel"
+                    />
+                    <label for="email">Email Address</label> 
+                </span>
+                <div *ngIf="!email.valid && (email.dirty || email.touched)" class="help-message">
+                    <small *ngIf="email.control.errors?.required; else invalidEmail">
+                        *Email is required.
+                    </small>
+                    <ng-template #invalidEmail>
+                        <small>
+                            *Email is invalid.
+                        </small>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="card flex justify-content-center">
+                <p-dropdown
+                        ngModel name="role"
+                        [options]="roles" 
+                        optionLabel="name" 
+                        [showClear]="true" 
+                        placeholder="Role"
+                        optionDisabled="isDisable"
+                        class="dropdown"
+                ></p-dropdown>
+            </div>
 
-        <div>
-            <span class="p-float-label">
-                <input pInputText id="email" 
-                    ngModel name="email" 
-                    required
-                    email
-                    #email="ngModel"
-                />
-                <label for="email">Email Address</label> 
-            </span>
-            <div *ngIf="!email.valid && (email.dirty || email.touched)" class="help-message">
-                <small *ngIf="email.control.errors?.required; else invalidEmail">
-                    *Email is required.
-                </small>
-                <ng-template #invalidEmail>
-                    <small>
-                        *Email is invalid.
-                    </small>
-                </ng-template>
-            </div>
-        </div>
-
-        <div class="card flex justify-content-center">
-            <p-dropdown
-                    ngModel name="role"
-                    [options]="roles" 
-                    optionLabel="name" 
-                    [showClear]="true" 
-                    placeholder="Role"
-                    optionDisabled="isDisable"
-                    class="dropdown"
-            ></p-dropdown>
-        </div>
+        </ng-container>
+        
         <button type="submit" pButton label="Submit" class="submit-btn" [disabled]="!form.valid"></button>
     </form>
 </p-dialog>
-

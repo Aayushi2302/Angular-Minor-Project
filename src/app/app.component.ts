@@ -7,14 +7,10 @@ import { UserService } from './shared/user/user.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit{
+export class AppComponent {
   title = 'ParkSafe';
   router = inject(Router);
   userService = inject(UserService);
-
-  ngOnInit() {
-    
-  }
 
   getCurrentRoute(): Boolean {
     if (this.router.url === "/login") return false;

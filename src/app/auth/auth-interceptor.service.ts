@@ -1,3 +1,4 @@
+import { AuthService } from './auth.service';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { Observable, throwError } from "rxjs";
@@ -9,6 +10,7 @@ import { RefreshTokenService } from "../shared/refresh_token/refresh-token.servi
 export class AuthInterceptorService implements HttpInterceptor{
 
     refreshTokenService = inject(RefreshTokenService);
+    authService = inject(AuthService);
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         
@@ -24,7 +26,8 @@ export class AuthInterceptorService implements HttpInterceptor{
         return next.handle(modifiedReq).pipe(catchError(err => {
             
             if (err.error.error === "Token Expired"){
-                this.refreshTokenService.getNewAccessToken();
+                // this.refreshTokenService.getNewAccessToken();
+                this.authService.logout();
             }
 
             return throwError(() => err);

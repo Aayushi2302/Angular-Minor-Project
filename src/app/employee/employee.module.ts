@@ -13,6 +13,7 @@ import { PasswordModule } from 'primeng/password';
 import { FormsModule } from "@angular/forms";
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DropdownModule } from 'primeng/dropdown';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { DropdownModule } from 'primeng/dropdown';
     ],
     imports: [
         EmployeeRoutingModule,
+        SharedModule,
         RouterModule,
         CommonModule,
         TableModule,

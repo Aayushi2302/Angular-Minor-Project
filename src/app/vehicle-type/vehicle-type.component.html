@@ -1,5 +1,6 @@
 <div class="container">
     <h1>Vehicle Types</h1>
+    <app-loader *ngIf="loading"></app-loader>
     <div class="table-bg">
         <p-table 
             [value]="vehicleTypes" 

@@ -1,23 +1,28 @@
 import { NgModule } from "@angular/core";
 import { HeaderComponent } from "./header/header.component";
-import { FooterComponent } from "./footer/footer.component";
 import { CommonModule } from "@angular/common";
 import { MenubarModule } from "primeng/menubar";
 import { TieredMenuModule } from 'primeng/tieredmenu';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import { LoaderComponent } from "./loader/loader.component";
 
 @NgModule({
     declarations: [
         HeaderComponent,
-        FooterComponent
+        PageNotFoundComponent,
+        LoaderComponent
     ],
     imports: [
         CommonModule,
         MenubarModule,
-        TieredMenuModule
+        TieredMenuModule,
+        ProgressSpinnerModule
     ],
     exports: [
         HeaderComponent,
-        FooterComponent
+        PageNotFoundComponent,
+        LoaderComponent
     ]
 })
 export class SharedModule { }
